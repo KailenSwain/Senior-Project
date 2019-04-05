@@ -1,0 +1,25 @@
+
+import processing.video.*;
+
+Capture video; PImage prev;
+
+void setup() {
+  size(640, 480);
+
+  String[] cameras = Capture.list();
+  printArray(cameras);
+  video = new Capture(this, 640, 480, 30);
+  video.start();
+  prev = createImage(352, 288, RGB);
+}
+
+void captureEvent(Capture video){ if(prev!=null) {prev.copy(video, 0, 0, video.width, video.height, 0, 0, prev.width, prev.height); prev.updatePixels(); video.read();}}
+
+void draw(){video.loadPixels();
+prev.loadPixels();
+image(video, 0, 0);
+}
+  void mousePressed(){
+    saveFrame("line-######.png");
+   
+  }
